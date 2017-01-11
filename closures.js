@@ -10,18 +10,21 @@ assignments.one = function(){
 
   var buttons = $('button');
 
-  var buttonClick = function(num) {
-    // A new closure is created for each iteration in the for loop below
-    // This allows num to be different each time a button is clicked
-    $(buttons[num]).on('click', function() {
-      $('#clicked-btn').text('You clicked button #' + num);
+  var buttonClick = function(i) {
+    // A new closure is created for each call of buttonClick.
+    // This allows i to be different each time a button is clicked.
+    // If we didn't define i in *this* function, then we would use
+    //   the outermost function's i, which is 4 after iteration is
+    //   finished.
+    $(buttons[i]).on('click', function() {
+      $('#clicked-btn').text('You clicked button #' + i);
     });
   }
 
   for (var i = 0; i < buttons.length; i++) {
-    // Place everything from before in a function called buttonClick
-    // buttonClick is defined above
-    // Pass along index
+    // Place the event listener in a function called buttonClick.
+    // The index is passed along so that a new closure can be created
+    //   for each iteration.
     buttonClick(i);
   }
 
